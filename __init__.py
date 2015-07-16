@@ -11,6 +11,7 @@ def register():
         Category,
         CategoryType,
         Template,
+        Franchise,
         TemplateFranchise,
         CreateSuggestionsStart,
         Sale,
