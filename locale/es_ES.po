@@ -1,0 +1,171 @@
+#
+msgid ""
+msgstr "Content-Type: text/plain; charset=utf-8\n"
+
+msgctxt "field:product.category,types:"
+msgid "Type"
+msgstr "Tipo"
+
+msgctxt "field:product.template,franchises:"
+msgid "Franchises"
+msgstr "Franquicias"
+
+msgctxt "field:sale.create_suggestions.start,id:"
+msgid "ID"
+msgstr "Identificador"
+
+msgctxt "field:sale.create_suggestions.start,sale_type:"
+msgid "Sale Type"
+msgstr "Tipos de venta"
+
+msgctxt "field:sale.franchise-product.template,create_date:"
+msgid "Create Date"
+msgstr "Fecha de creación"
+
+msgctxt "field:sale.franchise-product.template,create_uid:"
+msgid "Create User"
+msgstr "Usuario de creación"
+
+msgctxt "field:sale.franchise-product.template,franchise:"
+msgid "Franchise"
+msgstr "Franquicia"
+
+msgctxt "field:sale.franchise-product.template,id:"
+msgid "ID"
+msgstr "Identificador"
+
+msgctxt "field:sale.franchise-product.template,rec_name:"
+msgid "Name"
+msgstr "Nombre"
+
+msgctxt "field:sale.franchise-product.template,template:"
+msgid "Template"
+msgstr "Plantilla"
+
+msgctxt "field:sale.franchise-product.template,write_date:"
+msgid "Write Date"
+msgstr "Fecha modificación"
+
+msgctxt "field:sale.franchise-product.template,write_uid:"
+msgid "Write User"
+msgstr "Usuario modificación"
+
+msgctxt "field:sale.sale,type:"
+msgid "Type"
+msgstr "Tipo"
+
+msgctxt "field:sale.type,categories:"
+msgid "Categories"
+msgstr "Categorías"
+
+msgctxt "field:sale.type,create_date:"
+msgid "Create Date"
+msgstr "Fecha de creación"
+
+msgctxt "field:sale.type,create_uid:"
+msgid "Create User"
+msgstr "Usuario de creación"
+
+msgctxt "field:sale.type,id:"
+msgid "ID"
+msgstr "Identificador"
+
+msgctxt "field:sale.type,name:"
+msgid "Name"
+msgstr "Nombre"
+
+msgctxt "field:sale.type,rec_name:"
+msgid "Name"
+msgstr "Nombre"
+
+msgctxt "field:sale.type,write_date:"
+msgid "Write Date"
+msgstr "Fecha modificación"
+
+msgctxt "field:sale.type,write_uid:"
+msgid "Write User"
+msgstr "Usuario modificación"
+
+msgctxt "field:sale.type-product.category,category:"
+msgid "Category"
+msgstr "Categoría"
+
+msgctxt "field:sale.type-product.category,create_date:"
+msgid "Create Date"
+msgstr "Fecha de creación"
+
+msgctxt "field:sale.type-product.category,create_uid:"
+msgid "Create User"
+msgstr "Usuario de creación"
+
+msgctxt "field:sale.type-product.category,id:"
+msgid "ID"
+msgstr "Identificador"
+
+msgctxt "field:sale.type-product.category,rec_name:"
+msgid "Name"
+msgstr "Nombre"
+
+msgctxt "field:sale.type-product.category,type:"
+msgid "Type"
+msgstr "Tipo"
+
+msgctxt "field:sale.type-product.category,write_date:"
+msgid "Write Date"
+msgstr "Fecha modificación"
+
+msgctxt "field:sale.type-product.category,write_uid:"
+msgid "Write User"
+msgstr "Usuario modificación"
+
+msgctxt "model:ir.action,name:act_sale_type"
+msgid "Sale Type"
+msgstr "Tipos de venta"
+
+msgctxt "model:ir.action,name:wizard_create_suggestions"
+msgid "Create Sugestions"
+msgstr "Crear sugerimientos"
+
+msgctxt "model:ir.ui.menu,name:menu_create_suggestions"
+msgid "Create Sugestions"
+msgstr "Crear sugerimientos"
+
+msgctxt "model:ir.ui.menu,name:menu_sale_type"
+msgid "Sale Type"
+msgstr "Tipos de venta"
+
+msgctxt "model:sale.create_suggestions.start,name:"
+msgid "Create Suggestions Start"
+msgstr "Inici crear sugerimientos"
+
+msgctxt "model:sale.franchise-product.template,name:"
+msgid "Product Template - Franchise"
+msgstr "Plantilla Producto - Franquicia"
+
+msgctxt "model:sale.type,name:"
+msgid "Sale Type"
+msgstr "Tipo de venta"
+
+msgctxt "model:sale.type-product.category,name:"
+msgid "Product Template - Franchise"
+msgstr "Plantilla Producto - Franquicia"
+
+msgctxt "view:sale.create_suggestions.start:"
+msgid "Create Sale Suggestions"
+msgstr "Crear sugerimentos de venta"
+
+msgctxt "view:sale.type:"
+msgid "Sale Type"
+msgstr "Tipo de venta"
+
+msgctxt "view:sale.type:"
+msgid "Sale Types"
+msgstr "Tipos de venta"
+
+msgctxt "wizard_button:sale.create_suggestions,start,end:"
+msgid "Cancel"
+msgstr "Cancelar"
+
+msgctxt "wizard_button:sale.create_suggestions,start,result:"
+msgid "Create"
+msgstr "Crear"

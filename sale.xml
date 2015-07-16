@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- The COPYRIGHT file at the top level of this repository contains the full
+     copyright notices and license terms. -->
+<tryton>
+    <data>
+        <record model="ir.ui.view" id="create_suggestions_start_view_form">
+            <field name="model">sale.create_suggestions.start</field>
+            <field name="type">form</field>
+            <field name="name">create_suggestions_start_form</field>
+        </record>
+        <record model="ir.action.wizard" id="wizard_create_suggestions">
+            <field name="name">Create Sugestions</field>
+            <field name="wiz_name">sale.create_suggestions</field>
+        </record>
+        <record model="ir.ui.view" id="sale_view_form">
+            <field name="model">sale.sale</field>
+            <field name="type">form</field>
+            <field name="inherit" ref="sale.sale_view_form"/>
+            <field name="name">sale_form</field>
+        </record>
+        <record model="ir.ui.view" id="sale_view_tree">
+            <field name="model">sale.sale</field>
+            <field name="type">tree</field>
+            <field name="inherit" ref="sale.sale_view_tree"/>
+            <field name="name">sale_tree</field>
+        </record>
+
+        <!-- Menus -->
+        <menuitem id="menu_create_suggestions" parent="sale.menu_sale"
+            sequence="40" action="wizard_create_suggestions"/>
+
+    </data>
+</tryton>

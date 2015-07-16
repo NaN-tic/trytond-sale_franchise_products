@@ -1,0 +1,171 @@
+#
+msgid ""
+msgstr "Content-Type: text/plain; charset=utf-8\n"
+
+msgctxt "field:product.category,types:"
+msgid "Type"
+msgstr "Tipus"
+
+msgctxt "field:product.template,franchises:"
+msgid "Franchises"
+msgstr "Franquícies"
+
+msgctxt "field:sale.create_suggestions.start,id:"
+msgid "ID"
+msgstr "Identificador"
+
+msgctxt "field:sale.create_suggestions.start,sale_type:"
+msgid "Sale Type"
+msgstr "Tipus de venda"
+
+msgctxt "field:sale.franchise-product.template,create_date:"
+msgid "Create Date"
+msgstr "Data de creació"
+
+msgctxt "field:sale.franchise-product.template,create_uid:"
+msgid "Create User"
+msgstr "Usuari de creació"
+
+msgctxt "field:sale.franchise-product.template,franchise:"
+msgid "Franchise"
+msgstr "Franquicia"
+
+msgctxt "field:sale.franchise-product.template,id:"
+msgid "ID"
+msgstr "Identificador"
+
+msgctxt "field:sale.franchise-product.template,rec_name:"
+msgid "Name"
+msgstr "Nom"
+
+msgctxt "field:sale.franchise-product.template,template:"
+msgid "Template"
+msgstr "Plantilla"
+
+msgctxt "field:sale.franchise-product.template,write_date:"
+msgid "Write Date"
+msgstr "Data modificació"
+
+msgctxt "field:sale.franchise-product.template,write_uid:"
+msgid "Write User"
+msgstr "Usuari modificació"
+
+msgctxt "field:sale.sale,type:"
+msgid "Type"
+msgstr "Tipus"
+
+msgctxt "field:sale.type,categories:"
+msgid "Categories"
+msgstr "Categories"
+
+msgctxt "field:sale.type,create_date:"
+msgid "Create Date"
+msgstr "Data de creació"
+
+msgctxt "field:sale.type,create_uid:"
+msgid "Create User"
+msgstr "Usuari de creació"
+
+msgctxt "field:sale.type,id:"
+msgid "ID"
+msgstr "Identificador"
+
+msgctxt "field:sale.type,name:"
+msgid "Name"
+msgstr "Nom"
+
+msgctxt "field:sale.type,rec_name:"
+msgid "Name"
+msgstr "Nom"
+
+msgctxt "field:sale.type,write_date:"
+msgid "Write Date"
+msgstr "Data modificació"
+
+msgctxt "field:sale.type,write_uid:"
+msgid "Write User"
+msgstr "Usuari modificació"
+
+msgctxt "field:sale.type-product.category,category:"
+msgid "Category"
+msgstr "Categoria"
+
+msgctxt "field:sale.type-product.category,create_date:"
+msgid "Create Date"
+msgstr "Data de creació"
+
+msgctxt "field:sale.type-product.category,create_uid:"
+msgid "Create User"
+msgstr "Usuari de creació"
+
+msgctxt "field:sale.type-product.category,id:"
+msgid "ID"
+msgstr "Identificador"
+
+msgctxt "field:sale.type-product.category,rec_name:"
+msgid "Name"
+msgstr "Nom"
+
+msgctxt "field:sale.type-product.category,type:"
+msgid "Type"
+msgstr "Tipus"
+
+msgctxt "field:sale.type-product.category,write_date:"
+msgid "Write Date"
+msgstr "Data modificació"
+
+msgctxt "field:sale.type-product.category,write_uid:"
+msgid "Write User"
+msgstr "Usuari modificació"
+
+msgctxt "model:ir.action,name:act_sale_type"
+msgid "Sale Type"
+msgstr "Tipus de venda"
+
+msgctxt "model:ir.action,name:wizard_create_suggestions"
+msgid "Create Sugestions"
+msgstr "Crear sugeriments"
+
+msgctxt "model:ir.ui.menu,name:menu_create_suggestions"
+msgid "Create Sugestions"
+msgstr "Crear sugeriments"
+
+msgctxt "model:ir.ui.menu,name:menu_sale_type"
+msgid "Sale Type"
+msgstr "Tipus de venda"
+
+msgctxt "model:sale.create_suggestions.start,name:"
+msgid "Create Suggestions Start"
+msgstr "Inici crear sugeriments"
+
+msgctxt "model:sale.franchise-product.template,name:"
+msgid "Product Template - Franchise"
+msgstr "Plantilla Producte - Franquicia"
+
+msgctxt "model:sale.type,name:"
+msgid "Sale Type"
+msgstr "Tipus de venda"
+
+msgctxt "model:sale.type-product.category,name:"
+msgid "Product Template - Franchise"
+msgstr "Plantilla Producte - Franquicia"
+
+msgctxt "view:sale.create_suggestions.start:"
+msgid "Create Sale Suggestions"
+msgstr "Crear sugeriments de venda"
+
+msgctxt "view:sale.type:"
+msgid "Sale Type"
+msgstr "Tipus de venda"
+
+msgctxt "view:sale.type:"
+msgid "Sale Types"
+msgstr "Tipus de venda"
+
+msgctxt "wizard_button:sale.create_suggestions,start,end:"
+msgid "Cancel"
+msgstr "Cancel·la"
+
+msgctxt "wizard_button:sale.create_suggestions,start,result:"
+msgid "Create"
+msgstr "Crea"
