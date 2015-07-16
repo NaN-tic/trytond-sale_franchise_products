@@ -10,6 +10,10 @@ msgctxt "field:product.template,franchises:"
 msgid "Franchises"
 msgstr "Franquícies"
 
+msgctxt "field:product.template,types:"
+msgid "Sale Types"
+msgstr "Tipus de venda"
+
 msgctxt "field:sale.create_suggestions.start,id:"
 msgid "ID"
 msgstr "Identificador"

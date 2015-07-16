@@ -48,3 +48,19 @@ class Template:
             'invisible': ~Eval('salable', False),
             },
         depends=['salable'])
+    types = fields.Function(fields.Many2Many('sale.type', None, None,
+            'Sale Types',
+            states={
+                'invisible': ~Eval('salable', False),
+                },
+            depends=['salable']),
+        'get_types', searcher='search_types')
+
+    def get_types(self, name):
+        if self.category:
+            return [x.id for x in self.category.types]
+        return []
+
+    @classmethod
+    def search_types(cls, name, clause):
+        return [tuple(('category.types',)) + tuple(clause[1:])]

@@ -4,5 +4,6 @@
 <data>
     <xpath expr="/tree" position="inside">
         <field name="franchises"/>
+        <field name="types"/>
     </xpath>
 </data>
