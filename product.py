@@ -30,18 +30,19 @@ class Category:
 class CategoryType(ModelSQL):
     'Product Template - Franchise'
     __name__ = 'sale.type-product.category'
-    type = fields.Many2One('sale.type', 'Type', required=True, select=True)
+    type = fields.Many2One('sale.type', 'Type', required=True, select=True,
+        ondelete='CASCADE')
     category = fields.Many2One('product.category', 'Category', required=True,
-        select=True)
+        select=True, ondelete='CASCADE')
 
 
 class TemplateFranchise(ModelSQL):
     'Product Template - Franchise'
     __name__ = 'sale.franchise-product.template'
     template = fields.Many2One('product.template', 'Template', required=True,
-        select=True)
+        select=True, ondelete='CASCADE')
     franchise = fields.Many2One('sale.franchise', 'Franchise', required=True,
-        select=True)
+        select=True, ondelete='CASCADE')
 
 
 class Template:
