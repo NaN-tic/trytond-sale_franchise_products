@@ -1,8 +1,12 @@
 <?xml version="1.0"?>
 <!-- The COPYRIGHT file at the top level of this repository contains the full
      copyright notices and license terms. -->
-<form string="Sale Type" col="2">
+<form string="Sale Type">
     <label name="name"/>
     <field name="name"/>
-    <field name="categories" colspan="2"/>
+    <label name="accepts_new_products"/>
+    <field name="accepts_new_products"/>
+    <field name="categories" colspan="4"/>
+    <separator name="notes" colspan="4"/>
+    <field name="notes" colspan="4"/>
 </form>

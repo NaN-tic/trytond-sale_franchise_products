@@ -4,4 +4,8 @@
 <form string="Create Sale Suggestions" col="2">
     <label name="sale_type"/>
     <field name="sale_type"/>
+    <label name="date"/>
+    <field name="date"/>
+    <separator name="notes" colspan="2"/>
+    <field name="notes" colspan="2"/>
 </form>

@@ -12,6 +12,21 @@ class CreateSuggestionsStart(ModelView):
     'Create Suggestions Start'
     __name__ = 'sale.create_suggestions.start'
     sale_type = fields.Many2One('sale.type', 'Sale Type', required=True)
+    date = fields.Date('Date', required=True)
+    notes = fields.Text('Notes')
+
+    @staticmethod
+    def default_date():
+        pool = Pool()
+        Date = pool.get('ir.date')
+        return Date.today()
+
+    @fields.depends('sale_type', 'notes')
+    def on_change_sale_type(self):
+        changes = {}
+        if self.sale_type and not self.notes:
+            changes['notes'] = self.sale_type.notes
+        return changes
 
 
 class CreateSuggestions(Wizard):
@@ -39,6 +54,8 @@ class CreateSuggestions(Wizard):
         sale.party = franchise.company.party
         sale.franchise = franchise
         sale.type = self.start.sale_type
+        sale.sale_date = self.start.date
+        sale.comment = self.start.notes
         for name in ('party', 'franchise'):
             for field in getattr(Sale, name).on_change:
                 if not hasattr(sale, field):
@@ -54,7 +71,7 @@ class CreateSuggestions(Wizard):
                 if not hasattr(sale, field):
                     setattr(sale, field, None)
             line.type = 'line'
-            line.quantity = 1.0
+            line.quantity = 0.0
             line.product = product
             for k, v in line.on_change_product().iteritems():
                 setattr(line, k, v)
@@ -85,3 +102,21 @@ class Sale:
     __name__ = 'sale.sale'
     __metaclass__ = PoolMeta
     type = fields.Many2One('sale.type', 'Type')
+
+    @fields.depends('type', 'notes')
+    def on_change_type(self):
+        changes = {}
+        if self.type and not self.notes:
+            changes['comment'] = self.type.notes
+        return changes
+
+    @fields.depends('franchise', methods=['party'])
+    def on_change_franchise(self):
+        changes = super(Sale, self).on_change_franchise()
+        if self.franchise:
+            party = self.franchise.company.party
+            changes['party'] = party.id
+            changes['party.rec_name'] = party.rec_name
+            self.party = party
+            changes.update(self.on_change_party())
+        return changes

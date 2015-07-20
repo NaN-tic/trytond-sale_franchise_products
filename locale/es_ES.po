@@ -14,12 +14,32 @@ msgctxt "field:product.template,types:"
 msgid "Sale Types"
 msgstr "Tipos de venta"
 
+msgctxt "field:sale.create_suggestions.start,date:"
+msgid "Date"
+msgstr "Fecha"
+
 msgctxt "field:sale.create_suggestions.start,id:"
 msgid "ID"
 msgstr "Identificador"
 
+msgctxt "field:sale.create_suggestions.start,notes:"
+msgid "Notes"
+msgstr "Notas"
+
 msgctxt "field:sale.create_suggestions.start,sale_type:"
 msgid "Sale Type"
+msgstr "Tipos de venta"
+
+msgctxt "field:sale.franchise,categories:"
+msgid "Categories"
+msgstr "Categorías"
+
+msgctxt "field:sale.franchise,templates:"
+msgid "Product Templates"
+msgstr "Plantillas de producto"
+
+msgctxt "field:sale.franchise,types:"
+msgid "Sale Types"
 msgstr "Tipos de venta"
 
 msgctxt "field:sale.franchise-product.template,create_date:"
@@ -58,6 +78,10 @@ msgctxt "field:sale.sale,type:"
 msgid "Type"
 msgstr "Tipo"
 
+msgctxt "field:sale.type,accepts_new_products:"
+msgid "Accepts new products"
+msgstr "Acepta nuevos productos"
+
 msgctxt "field:sale.type,categories:"
 msgid "Categories"
 msgstr "Categorías"
@@ -77,6 +101,10 @@ msgstr "Identificador"
 msgctxt "field:sale.type,name:"
 msgid "Name"
 msgstr "Nombre"
+
+msgctxt "field:sale.type,notes:"
+msgid "Notes"
+msgstr "Notas"
 
 msgctxt "field:sale.type,rec_name:"
 msgid "Name"
@@ -121,6 +149,10 @@ msgstr "Fecha modificación"
 msgctxt "field:sale.type-product.category,write_uid:"
 msgid "Write User"
 msgstr "Usuario modificación"
+
+msgctxt "help:sale.type,accepts_new_products:"
+msgid "If left blank it will not be possible to create new lines on sales"
+msgstr "Si no se marca no se podrán añadir nuevas líneas en las ventas."
 
 msgctxt "model:ir.action,name:act_sale_type"
 msgid "Sale Type"

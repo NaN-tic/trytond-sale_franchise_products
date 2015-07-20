@@ -14,12 +14,32 @@ msgctxt "field:product.template,types:"
 msgid "Sale Types"
 msgstr "Tipus de venda"
 
+msgctxt "field:sale.create_suggestions.start,date:"
+msgid "Date"
+msgstr "Data"
+
 msgctxt "field:sale.create_suggestions.start,id:"
 msgid "ID"
 msgstr "Identificador"
 
+msgctxt "field:sale.create_suggestions.start,notes:"
+msgid "Notes"
+msgstr "Notes"
+
 msgctxt "field:sale.create_suggestions.start,sale_type:"
 msgid "Sale Type"
+msgstr "Tipus de venda"
+
+msgctxt "field:sale.franchise,categories:"
+msgid "Categories"
+msgstr "Categories"
+
+msgctxt "field:sale.franchise,templates:"
+msgid "Product Templates"
+msgstr "Plantilles de producte"
+
+msgctxt "field:sale.franchise,types:"
+msgid "Sale Types"
 msgstr "Tipus de venda"
 
 msgctxt "field:sale.franchise-product.template,create_date:"
@@ -58,6 +78,10 @@ msgctxt "field:sale.sale,type:"
 msgid "Type"
 msgstr "Tipus"
 
+msgctxt "field:sale.type,accepts_new_products:"
+msgid "Accepts new products"
+msgstr "Acepta nous productes"
+
 msgctxt "field:sale.type,categories:"
 msgid "Categories"
 msgstr "Categories"
@@ -77,6 +101,10 @@ msgstr "Identificador"
 msgctxt "field:sale.type,name:"
 msgid "Name"
 msgstr "Nom"
+
+msgctxt "field:sale.type,notes:"
+msgid "Notes"
+msgstr "Notes"
 
 msgctxt "field:sale.type,rec_name:"
 msgid "Name"
@@ -121,6 +149,11 @@ msgstr "Data modificació"
 msgctxt "field:sale.type-product.category,write_uid:"
 msgid "Write User"
 msgstr "Usuari modificació"
+
+msgctxt "help:sale.type,accepts_new_products:"
+msgid "If left blank it will not be possible to create new lines on sales"
+msgstr ""
+"Si no es marca no es podrà crear noves línies a les vendes d'aquest tipus."
 
 msgctxt "model:ir.action,name:act_sale_type"
 msgid "Sale Type"

@@ -13,6 +13,10 @@ class SaleType(ModelSQL, ModelView):
     'Sale Type'
     __name__ = 'sale.type'
     name = fields.Char('Name', required=True)
+    notes = fields.Text('Notes')
+    accepts_new_products = fields.Boolean('Accepts new products',
+        help=('If left blank it will not be possible to create new lines on '
+            'sales'))
     categories = fields.Many2Many('sale.type-product.category', 'type',
         'category', 'Categories')
 
