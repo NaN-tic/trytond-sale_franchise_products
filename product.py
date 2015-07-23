@@ -55,12 +55,13 @@ class Template:
             'invisible': ~Eval('salable', False),
             },
         depends=['salable'])
-    types = fields.Many2Many('sale.franchise-product.template', 'template',
-        'franchise', 'Sale Types', readonly=True,
-        states={
-            'invisible': ~Eval('salable', False),
-            },
-        depends=['salable'])
+    types = fields.Function(fields.Many2Many('sale.type', None, None,
+            'Sale Types',
+            states={
+                'invisible': ~Eval('salable', False),
+                },
+            depends=['salable']),
+        'get_types', searcher='search_types')
 
     def get_types(self, name):
         return list(set(t.id for f in self.franchises for t in f.types))
