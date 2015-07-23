@@ -1,7 +1,7 @@
 # The COPYRIGHT file at the top level of this repository contains
 # the full copyright notices and license terms.
 from trytond.model import ModelView, ModelSQL, fields
-from trytond.pool import PoolMeta
+from trytond.pool import Pool, PoolMeta
 from trytond.pyson import Eval
 
 __all__ = ['SaleType', 'SaleTypeFranchise', 'TemplateFranchise', 'Template',
@@ -29,13 +29,31 @@ class Franchise:
         'type', 'Sale Types')
 
 
-class SaleTypeFranchise(ModelSQL):
+class SaleTypeFranchise(ModelSQL, ModelView):
     'SaleType - Franchise'
     __name__ = 'sale.type-sale.franchise'
     type = fields.Many2One('sale.type', 'Type', required=True, select=True,
         ondelete='CASCADE')
     franchise = fields.Many2One('sale.franchise', 'Franchise', required=True,
         select=True, ondelete='CASCADE')
+    templates = fields.Function(fields.Many2Many('product.template', None,
+            None, 'Templates'),
+        'get_templates', setter='set_templates', searcher='search_templates')
+
+    def get_templates(self, name):
+        return [t.id for t in self.franchise.templates]
+
+    @classmethod
+    def set_templates(cls, records, name, value):
+        pool = Pool()
+        Franchise = pool.get('sale.franchise')
+        Franchise.write(list(set(x.franchise for x in records)), {
+                'templates': value,
+                })
+
+    @classmethod
+    def search_templates(cls, name, clause):
+        return [tuple(('franchise.templates',)) + tuple(clause[1:])]
 
 
 class TemplateFranchise(ModelSQL, ModelView):
