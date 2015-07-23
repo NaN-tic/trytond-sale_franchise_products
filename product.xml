@@ -61,6 +61,12 @@
             <field name="inherit" ref="sale_franchise.franchise_view_list"/>
             <field name="name">franchise_list</field>
         </record>
+        <record model="ir.ui.view" id="franchise_view_form">
+            <field name="model">sale.franchise</field>
+            <field name="type">form</field>
+            <field name="inherit" ref="sale_franchise.franchise_view_form"/>
+            <field name="name">franchise_form</field>
+        </record>
         <menuitem action="act_sale_type" id="menu_sale_type" parent="sale.menu_configuration" sequence="20"/>
     </data>
 </tryton>

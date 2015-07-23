@@ -6,7 +6,7 @@
     <field name="name"/>
     <label name="accepts_new_products"/>
     <field name="accepts_new_products"/>
-    <field name="categories" colspan="4"/>
+    <field name="franchises" colspan="4"/>
     <separator name="notes" colspan="4"/>
     <field name="notes" colspan="4"/>
 </form>

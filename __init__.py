@@ -8,11 +8,10 @@ from .sale import *
 def register():
     Pool.register(
         SaleType,
-        Category,
-        CategoryType,
+        TemplateFranchise,
+        SaleTypeFranchise,
         Template,
         Franchise,
-        TemplateFranchise,
         CreateSuggestionsStart,
         Sale,
         module='sale_franchise_products', type_='model')

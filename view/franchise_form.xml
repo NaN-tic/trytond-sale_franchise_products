@@ -2,8 +2,7 @@
 <!-- The COPYRIGHT file at the top level of this repository contains the full
      copyright notices and license terms. -->
 <data>
-    <xpath expr="/tree" position="inside">
-        <field name="types" tree_invisible="1"/>
-        <field name="templates" tree_invisible="1"/>
+    <xpath expr="/form/field[@name='state']" position="after">
+        <field name="types" colspan="4"/>
     </xpath>
 </data>

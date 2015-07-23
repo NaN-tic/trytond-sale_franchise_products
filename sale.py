@@ -42,7 +42,7 @@ class CreateSuggestions(Wizard):
     def _get_products_domain(self):
         return [
             ('template.salable', '=', True),
-            ('template.category.types', '=', self.start.sale_type.id),
+            ('template.types', '=', self.start.sale_type.id),
             ]
 
     def get_sale(self, franchise, products):
