@@ -3,6 +3,7 @@
 from collections import defaultdict
 from trytond.model import ModelView, fields
 from trytond.pool import Pool, PoolMeta
+from trytond.pyson import Eval
 from trytond.wizard import Wizard, StateView, StateAction, Button
 
 __all__ = ['CreateSuggestionsStart', 'CreateSuggestions', 'Sale']
@@ -101,7 +102,11 @@ class CreateSuggestions(Wizard):
 class Sale:
     __name__ = 'sale.sale'
     __metaclass__ = PoolMeta
-    type = fields.Many2One('sale.type', 'Type')
+    type = fields.Many2One('sale.type', 'Type',
+        states={
+            'readonly': Eval('state') != 'draft',
+            },
+        depends=['state'])
 
     @fields.depends('type', 'notes')
     def on_change_type(self):
