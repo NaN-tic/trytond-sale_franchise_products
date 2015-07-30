@@ -3,9 +3,10 @@
 from trytond.model import ModelView, ModelSQL, fields
 from trytond.pool import Pool, PoolMeta
 from trytond.pyson import Eval
+from trytond.wizard import Wizard, StateView, StateAction, Button
 
 __all__ = ['SaleType', 'SaleTypeFranchise', 'TemplateFranchise', 'Template',
-    'Franchise']
+    'Franchise', 'CreateFranchisesStart', 'CreateFranchises']
 __metaclass__ = PoolMeta
 
 
@@ -39,6 +40,14 @@ class SaleTypeFranchise(ModelSQL, ModelView):
     templates = fields.Function(fields.Many2Many('product.template', None,
             None, 'Templates'),
         'get_templates', setter='set_templates', searcher='search_templates')
+
+    @classmethod
+    def __setup__(cls):
+        super(SaleTypeFranchise, cls).__setup__()
+        cls._sql_constraints += [
+            ('invoice_type_franchise', 'UNIQUE(type, franchise)',
+                'The Type and Franchise must be unique.'),
+            ]
 
     def get_templates(self, name):
         return [t.id for t in self.franchise.templates]
@@ -87,3 +96,49 @@ class Template:
     @classmethod
     def search_types(cls, name, clause):
         return [tuple(('franchises.types',)) + tuple(clause[1:])]
+
+
+class CreateFranchisesStart(ModelView):
+    'Create Franchises Start'
+    __name__ = 'sale_type.create_franchises.start'
+    sale_type = fields.Many2One('sale.type', 'Sale Type', required=True)
+
+
+class CreateFranchises(Wizard):
+    'Create Franchises'
+    __name__ = 'sale_type.create_franchises'
+    start = StateView('sale_type.create_franchises.start',
+        'sale_franchise_products.create_franchises_start_view_form', [
+            Button('Cancel', 'end', 'tryton-cancel'),
+            Button('Create', 'result', 'tryton-ok', default=True),
+            ])
+    result = StateAction('sale_franchise_products.act_sale_type_franchise')
+
+    def _get_relation_domain(self):
+        return [('type', '=', self.start.sale_type.id)]
+
+    def get_relation(self, franchise):
+        pool = Pool()
+        Relation = pool.get('sale.type-sale.franchise')
+        relation = Relation()
+        relation.type = self.start.sale_type
+        relation.franchise = franchise
+        return relation
+
+    def do_result(self, action):
+        pool = Pool()
+        Franchise = pool.get('sale.franchise')
+        Relation = pool.get('sale.type-sale.franchise')
+
+        franchises = set(Franchise.search([]))
+        existing = set((x.franchise for x in Relation.search(
+                self._get_relation_domain())))
+        to_create = []
+        for missing in franchises - existing:
+            to_create.append(self.get_relation(missing)._save_values)
+
+        created = Relation.create(to_create)
+        data = {'res_id': [s.id for s in created]}
+        if len(franchises) == 1:
+            action['views'].reverse()
+        return action, data

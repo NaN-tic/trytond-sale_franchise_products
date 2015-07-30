@@ -89,6 +89,8 @@ class CreateSuggestions(Wizard):
         franchises = defaultdict(list)
         for product in products:
             for franchise in product.template.franchises:
+                if self.start.sale_type not in franchise.types:
+                    continue
                 franchises[franchise].append(product)
 
         sales = [self.get_sale(f, p) for f, p in franchises.iteritems()]

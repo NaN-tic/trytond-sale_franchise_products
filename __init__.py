@@ -13,8 +13,10 @@ def register():
         Template,
         Franchise,
         CreateSuggestionsStart,
+        CreateFranchisesStart,
         Sale,
         module='sale_franchise_products', type_='model')
     Pool.register(
         CreateSuggestions,
+        CreateFranchises,
         module='sale_franchise_products', type_='wizard')
