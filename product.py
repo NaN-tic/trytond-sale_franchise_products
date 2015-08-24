@@ -117,6 +117,9 @@ class CreateFranchises(Wizard):
     def _get_relation_domain(self):
         return [('type', '=', self.start.sale_type.id)]
 
+    def _get_franchises_domain(self):
+        return []
+
     def get_relation(self, franchise):
         pool = Pool()
         Relation = pool.get('sale.type-sale.franchise')
@@ -130,7 +133,7 @@ class CreateFranchises(Wizard):
         Franchise = pool.get('sale.franchise')
         Relation = pool.get('sale.type-sale.franchise')
 
-        franchises = set(Franchise.search([]))
+        franchises = set(Franchise.search(self._get_franchises_domain()))
         existing = set((x.franchise for x in Relation.search(
                 self._get_relation_domain())))
         to_create = []
