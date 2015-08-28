@@ -36,7 +36,11 @@ class SaleTypeFranchise(ModelSQL, ModelView):
     type = fields.Many2One('sale.type', 'Type', required=True, select=True,
         ondelete='CASCADE')
     franchise = fields.Many2One('sale.franchise', 'Franchise', required=True,
-        select=True, ondelete='CASCADE')
+        select=True, ondelete='CASCADE',
+        domain=[
+            ('types', '=', Eval('type')),
+            ],
+        depends=['type'])
     templates = fields.Function(fields.Many2Many('product.template', None,
             None, 'Templates'),
         'get_templates', setter='set_templates', searcher='search_templates')
