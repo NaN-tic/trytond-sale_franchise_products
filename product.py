@@ -5,8 +5,8 @@ from trytond.pool import Pool, PoolMeta
 from trytond.pyson import Eval
 from trytond.wizard import Wizard, StateView, StateAction, Button
 
-__all__ = ['SaleType', 'SaleTypeFranchise', 'TemplateFranchise', 'Template',
-    'Franchise', 'CreateFranchisesStart', 'CreateFranchises']
+__all__ = ['SaleType', 'SaleTypeFranchise', 'TypeFranchiseTemplate',
+    'Template', 'Franchise', 'CreateFranchisesStart', 'CreateFranchises']
 __metaclass__ = PoolMeta
 
 
@@ -24,10 +24,19 @@ class SaleType(ModelSQL, ModelView):
 
 class Franchise:
     __name__ = 'sale.franchise'
-    templates = fields.Many2Many('sale.franchise-product.template',
-        'franchise', 'template', 'Product Templates', readonly=True)
+    templates = fields.Function(fields.Many2Many('product.template', None,
+            None, 'Product Templates'),
+        'get_templates')
     types = fields.Many2Many('sale.type-sale.franchise', 'franchise',
         'type', 'Sale Types')
+
+    def get_templates(self, name):
+        pool = Pool()
+        Template = pool.get('product.template')
+        return [x.id for x in Template.search([
+                    ('franchises', '=', self.id),
+                    ('types', 'in', [x.id for x in self.types]),
+                    ])]
 
 
 class SaleTypeFranchise(ModelSQL, ModelView):
@@ -41,9 +50,8 @@ class SaleTypeFranchise(ModelSQL, ModelView):
             ('types', '=', Eval('type')),
             ],
         depends=['type'])
-    templates = fields.Function(fields.Many2Many('product.template', None,
-            None, 'Templates'),
-        'get_templates', setter='set_templates', searcher='search_templates')
+    templates = fields.Many2Many('sale.type-sale.franchise-product.template',
+        'type_franchise', 'template', 'Templates')
 
     @classmethod
     def __setup__(cls):
@@ -53,39 +61,28 @@ class SaleTypeFranchise(ModelSQL, ModelView):
                 'The Type and Franchise must be unique.'),
             ]
 
-    def get_templates(self, name):
-        return [t.id for t in self.franchise.templates]
 
-    @classmethod
-    def set_templates(cls, records, name, value):
-        pool = Pool()
-        Franchise = pool.get('sale.franchise')
-        Franchise.write(list(set(x.franchise for x in records)), {
-                'templates': value,
-                })
-
-    @classmethod
-    def search_templates(cls, name, clause):
-        return [tuple(('franchise.templates',)) + tuple(clause[1:])]
-
-
-class TemplateFranchise(ModelSQL, ModelView):
-    'Product Template - Franchise'
-    __name__ = 'sale.franchise-product.template'
-    franchise = fields.Many2One('sale.franchise', 'Franchise', required=True,
-        select=True, ondelete='CASCADE')
+class TypeFranchiseTemplate(ModelSQL, ModelView):
+    'Type per Franchise - Type'
+    __name__ = 'sale.type-sale.franchise-product.template'
+    type_franchise = fields.Many2One('sale.type-sale.franchise',
+        'Type per Franchise', required=True, select=True, ondelete='CASCADE')
     template = fields.Many2One('product.template', 'Template', required=True,
         select=True, ondelete='CASCADE')
 
 
 class Template:
     __name__ = 'product.template'
-    franchises = fields.Many2Many('sale.franchise-product.template',
-        'template', 'franchise', 'Franchises', readonly=True,
-        states={
-            'invisible': ~Eval('salable', False),
-            },
-        depends=['salable'])
+    type_franchises = fields.Many2Many(
+        'sale.type-sale.franchise-product.template', 'template',
+        'type_franchise', 'Type per Franchise')
+    franchises = fields.Function(fields.Many2Many(
+            'sale.franchise', None, None, 'Franchises',
+            states={
+                'invisible': ~Eval('salable', False),
+                },
+            depends=['salable']),
+        'get_franchises', searcher='search_franchises')
     types = fields.Function(fields.Many2Many('sale.type', None, None,
             'Sale Types',
             states={
@@ -94,12 +91,19 @@ class Template:
             depends=['salable']),
         'get_types', searcher='search_types')
 
+    def get_franchises(self, name):
+        return list(set(r.franchise.id for r in self.type_franchises))
+
+    @classmethod
+    def search_franchises(cls, name, clause):
+        return [tuple(('type_franchises.franchise',)) + tuple(clause[1:])]
+
     def get_types(self, name):
-        return list(set(t.id for f in self.franchises for t in f.types))
+        return list(set(r.type.id for r in self.type_franchises))
 
     @classmethod
     def search_types(cls, name, clause):
-        return [tuple(('franchises.types',)) + tuple(clause[1:])]
+        return [tuple(('type_franchises.type',)) + tuple(clause[1:])]
 
 
 class CreateFranchisesStart(ModelView):
@@ -144,7 +148,10 @@ class CreateFranchises(Wizard):
         for missing in franchises - existing:
             to_create.append(self.get_relation(missing)._save_values)
 
-        created = Relation.create(to_create)
+        Relation.create(to_create)
+        created = Relation.search([
+                ('type', '=', self.start.sale_type.id),
+                ])
         data = {'res_id': [s.id for s in created]}
         if len(franchises) == 1:
             action['views'].reverse()

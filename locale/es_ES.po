@@ -10,6 +10,10 @@ msgctxt "field:product.template,franchises:"
 msgid "Franchises"
 msgstr "Franquicias"
 
+msgctxt "field:product.template,type_franchises:"
+msgid "Type per Franchise"
+msgstr "Tipo por franquicia"
+
 msgctxt "field:product.template,types:"
 msgid "Sale Types"
 msgstr "Tipos de venta"
@@ -37,38 +41,6 @@ msgstr "Plantillas de producto"
 msgctxt "field:sale.franchise,types:"
 msgid "Sale Types"
 msgstr "Tipos de venta"
-
-msgctxt "field:sale.franchise-product.template,create_date:"
-msgid "Create Date"
-msgstr "Fecha de creación"
-
-msgctxt "field:sale.franchise-product.template,create_uid:"
-msgid "Create User"
-msgstr "Usuario de creación"
-
-msgctxt "field:sale.franchise-product.template,franchise:"
-msgid "Franchise"
-msgstr "Franquicia"
-
-msgctxt "field:sale.franchise-product.template,id:"
-msgid "ID"
-msgstr "Identificador"
-
-msgctxt "field:sale.franchise-product.template,rec_name:"
-msgid "Name"
-msgstr "Nombre"
-
-msgctxt "field:sale.franchise-product.template,template:"
-msgid "Template"
-msgstr "Plantilla"
-
-msgctxt "field:sale.franchise-product.template,write_date:"
-msgid "Write Date"
-msgstr "Fecha modificación"
-
-msgctxt "field:sale.franchise-product.template,write_uid:"
-msgid "Write User"
-msgstr "Usuario modificación"
 
 msgctxt "field:sale.sale,type:"
 msgid "Type"
@@ -150,6 +122,38 @@ msgctxt "field:sale.type-sale.franchise,write_uid:"
 msgid "Write User"
 msgstr "Usuario modificación"
 
+msgctxt "field:sale.type-sale.franchise-product.template,create_date:"
+msgid "Create Date"
+msgstr "Fecha de creación"
+
+msgctxt "field:sale.type-sale.franchise-product.template,create_uid:"
+msgid "Create User"
+msgstr "Usuario de creación"
+
+msgctxt "field:sale.type-sale.franchise-product.template,id:"
+msgid "ID"
+msgstr "Identificador"
+
+msgctxt "field:sale.type-sale.franchise-product.template,rec_name:"
+msgid "Name"
+msgstr "Nombre"
+
+msgctxt "field:sale.type-sale.franchise-product.template,template:"
+msgid "Template"
+msgstr "Plantilla"
+
+msgctxt "field:sale.type-sale.franchise-product.template,type_franchise:"
+msgid "Type per Franchise"
+msgstr "Tipo por franquicia"
+
+msgctxt "field:sale.type-sale.franchise-product.template,write_date:"
+msgid "Write Date"
+msgstr "Fecha modificación"
+
+msgctxt "field:sale.type-sale.franchise-product.template,write_uid:"
+msgid "Write User"
+msgstr "Usuario modificación"
+
 msgctxt "field:sale_type.create_franchises.start,id:"
 msgid "ID"
 msgstr "Identificador"
@@ -198,10 +202,6 @@ msgctxt "model:sale.create_suggestions.start,name:"
 msgid "Create Suggestions Start"
 msgstr "Inici crear sugerimientos"
 
-msgctxt "model:sale.franchise-product.template,name:"
-msgid "Product Template - Franchise"
-msgstr "Plantilla Producto - Franquicia"
-
 msgctxt "model:sale.type,name:"
 msgid "Sale Type"
 msgstr "Tipo de venta"
@@ -209,6 +209,10 @@ msgstr "Tipo de venta"
 msgctxt "model:sale.type-sale.franchise,name:"
 msgid "SaleType - Franchise"
 msgstr "Tipo de Venta - Franquicia"
+
+msgctxt "model:sale.type-sale.franchise-product.template,name:"
+msgid "Type per Franchise - Type"
+msgstr "Tipo por franquicia - Tipo"
 
 msgctxt "model:sale_type.create_franchises.start,name:"
 msgid "Create Franchises Start"

@@ -8,8 +8,8 @@ from .sale import *
 def register():
     Pool.register(
         SaleType,
-        TemplateFranchise,
         SaleTypeFranchise,
+        TypeFranchiseTemplate,
         Template,
         Franchise,
         CreateSuggestionsStart,
