@@ -6,7 +6,7 @@ from trytond.pyson import Eval
 from trytond.wizard import Wizard, StateView, StateAction, Button
 
 __all__ = ['SaleType', 'SaleTypeFranchise', 'TypeFranchiseTemplate',
-    'Template', 'Franchise', 'CreateFranchisesStart', 'CreateFranchises']
+    'Template', 'Franchise']
 __metaclass__ = PoolMeta
 
 
@@ -104,55 +104,3 @@ class Template:
     @classmethod
     def search_types(cls, name, clause):
         return [tuple(('type_franchises.type',)) + tuple(clause[1:])]
-
-
-class CreateFranchisesStart(ModelView):
-    'Create Franchises Start'
-    __name__ = 'sale_type.create_franchises.start'
-    sale_type = fields.Many2One('sale.type', 'Sale Type', required=True)
-
-
-class CreateFranchises(Wizard):
-    'Create Franchises'
-    __name__ = 'sale_type.create_franchises'
-    start = StateView('sale_type.create_franchises.start',
-        'sale_franchise_products.create_franchises_start_view_form', [
-            Button('Cancel', 'end', 'tryton-cancel'),
-            Button('Create', 'result', 'tryton-ok', default=True),
-            ])
-    result = StateAction('sale_franchise_products.act_sale_type_franchise')
-
-    def _get_relation_domain(self):
-        return [('type', '=', self.start.sale_type.id)]
-
-    def _get_franchises_domain(self):
-        return []
-
-    def get_relation(self, franchise):
-        pool = Pool()
-        Relation = pool.get('sale.type-sale.franchise')
-        relation = Relation()
-        relation.type = self.start.sale_type
-        relation.franchise = franchise
-        return relation
-
-    def do_result(self, action):
-        pool = Pool()
-        Franchise = pool.get('sale.franchise')
-        Relation = pool.get('sale.type-sale.franchise')
-
-        franchises = set(Franchise.search(self._get_franchises_domain()))
-        existing = set((x.franchise for x in Relation.search(
-                self._get_relation_domain())))
-        to_create = []
-        for missing in franchises - existing:
-            to_create.append(self.get_relation(missing)._save_values)
-
-        Relation.create(to_create)
-        created = Relation.search([
-                ('type', '=', self.start.sale_type.id),
-                ])
-        data = {'res_id': [s.id for s in created]}
-        if len(franchises) == 1:
-            action['views'].reverse()
-        return action, data

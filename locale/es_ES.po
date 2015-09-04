@@ -154,17 +154,13 @@ msgctxt "field:sale.type-sale.franchise-product.template,write_uid:"
 msgid "Write User"
 msgstr "Usuario modificación"
 
-msgctxt "field:sale_type.create_franchises.start,id:"
-msgid "ID"
-msgstr "Identificador"
-
-msgctxt "field:sale_type.create_franchises.start,sale_type:"
-msgid "Sale Type"
-msgstr "Tipo de venta"
-
 msgctxt "help:sale.type,accepts_new_products:"
 msgid "If left blank it will not be possible to create new lines on sales"
 msgstr "Si no se marca no se podrán añadir nuevas líneas en las ventas."
+
+msgctxt "model:ir.action,name:"
+msgid "Create Missing Franchises"
+msgstr "Crear las franquicias faltantes"
 
 msgctxt "model:ir.action,name:act_sale_type"
 msgid "Sale Type"
@@ -174,21 +170,17 @@ msgctxt "model:ir.action,name:act_sale_type_franchise"
 msgid "Products by Sale Type and Franchise"
 msgstr "Productos per tipo de Venta y franquicia"
 
-msgctxt "model:ir.action,name:wizard_create_franchises"
-msgid "Create Missing Franchises"
-msgstr "Crear las franquicias faltantes"
-
 msgctxt "model:ir.action,name:wizard_create_suggestions"
 msgid "Create Sugestions"
 msgstr "Crear sugerimientos"
 
+msgctxt "model:ir.ui.menu,name:"
+msgid "Create Missing Franchises"
+msgstr "Crear las franquicias faltantes"
+
 msgctxt "model:ir.ui.menu,name:menu_create_suggestions"
 msgid "Create Sugestions"
 msgstr "Crear sugerimientos"
-
-msgctxt "model:ir.ui.menu,name:menu_sale_create_franchises"
-msgid "Create Missing Franchises"
-msgstr "Crear las franquicias faltantes"
 
 msgctxt "model:ir.ui.menu,name:menu_sale_type"
 msgid "Sale Type"
@@ -214,10 +206,6 @@ msgctxt "model:sale.type-sale.franchise-product.template,name:"
 msgid "Type per Franchise - Type"
 msgstr "Tipo por franquicia - Tipo"
 
-msgctxt "model:sale_type.create_franchises.start,name:"
-msgid "Create Franchises Start"
-msgstr "Inicio crear franquicias"
-
 msgctxt "view:sale.create_suggestions.start:"
 msgid "Create Sale Suggestions"
 msgstr "Crear sugerimentos de venta"
@@ -238,22 +226,10 @@ msgctxt "view:sale.type:"
 msgid "Sale Types"
 msgstr "Tipos de venta"
 
-msgctxt "view:sale_type.create_franchises.start:"
-msgid "Create Missing Franchises?"
-msgstr "Crear las franquicias faltantes?"
-
 msgctxt "wizard_button:sale.create_suggestions,start,end:"
 msgid "Cancel"
 msgstr "Cancelar"
 
 msgctxt "wizard_button:sale.create_suggestions,start,result:"
-msgid "Create"
-msgstr "Crear"
-
-msgctxt "wizard_button:sale_type.create_franchises,start,end:"
-msgid "Cancel"
-msgstr "Cancelar"
-
-msgctxt "wizard_button:sale_type.create_franchises,start,result:"
 msgid "Create"
 msgstr "Crear"
