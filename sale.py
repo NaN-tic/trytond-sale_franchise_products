@@ -120,8 +120,8 @@ class Sale:
     @fields.depends('franchise', methods=['party'])
     def on_change_franchise(self):
         changes = super(Sale, self).on_change_franchise()
-        if self.franchise:
-            party = self.franchise.company.party
+        if self.franchise and self.franchise.company_party:
+            party = self.franchise.company_party
             changes['party'] = party.id
             changes['party.rec_name'] = party.rec_name
             self.party = party
