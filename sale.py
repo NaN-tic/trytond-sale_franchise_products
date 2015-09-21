@@ -52,7 +52,7 @@ class CreateSuggestions(Wizard):
         SaleLine = pool.get('sale.line')
 
         sale = Sale()
-        sale.party = franchise.company.party
+        sale.party = franchise.company_party
         sale.franchise = franchise
         sale.type = self.start.sale_type
         sale.sale_date = self.start.date
