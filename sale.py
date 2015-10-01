@@ -1,9 +1,12 @@
 # The COPYRIGHT file at the top level of this repository contains
 # the full copyright notices and license terms.
 from collections import defaultdict
+from decimal import Decimal
+
 from trytond.model import ModelView, fields
 from trytond.pool import Pool, PoolMeta
 from trytond.pyson import Eval
+from trytond.transaction import Transaction
 from trytond.wizard import Wizard, StateView, StateAction, Button
 
 __all__ = ['CreateSuggestionsStart', 'CreateSuggestions', 'Sale']
@@ -48,6 +51,7 @@ class CreateSuggestions(Wizard):
 
     def get_sale(self, franchise, products):
         pool = Pool()
+        Product = pool.get('product.product')
         Sale = pool.get('sale.sale')
         SaleLine = pool.get('sale.line')
 
@@ -55,6 +59,7 @@ class CreateSuggestions(Wizard):
         sale.party = franchise.company_party
         sale.franchise = franchise
         sale.type = self.start.sale_type
+        sale.price_list = franchise.price_list
         sale.sale_date = self.start.date
         sale.comment = self.start.notes
         for name in ('party', 'franchise'):
@@ -66,6 +71,8 @@ class CreateSuggestions(Wizard):
                 setattr(sale, k, v)
 
         lines = []
+        uom2products = {}
+        product2lines = {}
         for product in products:
             line = SaleLine()
             for field in SaleLine.product.on_change:
@@ -74,9 +81,27 @@ class CreateSuggestions(Wizard):
             line.type = 'line'
             line.quantity = 0.0
             line.product = product
+            line.unit = product.sale_uom.id
+            uom2products.setdefault(line.unit.id, []).append(product)
+            product2lines.setdefault(product.id, []).append(line)
             for k, v in line.on_change_product().iteritems():
                 setattr(line, k, v)
             lines.append(line)
+        for uom_id, products in uom2products.iteritems():
+            with Transaction().set_context(
+                    currency=(sale.currency.id
+                        if getattr(sale, 'currency', None)
+                        else sale.default_currency()),
+                    customer=sale.party.id,
+                    sale_date=sale.sale_date,
+                    uom=uom_id,
+                    price_list=(sale.price_list.id
+                        if sale.price_list else None)):
+                product_prices = Product.get_sale_price(products, 0)
+            for product_id, list_price in product_prices.iteritems():
+                for line in product2lines[product_id]:
+                    line.gross_unit_price = list_price
+                    line.unit_price = list_price
         sale.lines = lines
         return sale
 
