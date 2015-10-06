@@ -54,6 +54,7 @@ class CreateSuggestions(Wizard):
         Product = pool.get('product.product')
         Sale = pool.get('sale.sale')
         SaleLine = pool.get('sale.line')
+        Tax = pool.get('account.tax')
 
         sale = Sale()
         sale.party = franchise.company_party
@@ -86,6 +87,21 @@ class CreateSuggestions(Wizard):
             product2lines.setdefault(product.id, []).append(line)
             for k, v in line.on_change_product().iteritems():
                 setattr(line, k, v)
+            # TODO: copy from sale.line.on_change_product()
+            line.taxes = []
+            pattern = line._get_tax_rule_pattern()
+            for tax in line.product.customer_taxes_used:
+                if franchise.company_party and franchise.company_party.customer_tax_rule:
+                    tax_ids = franchise.company_party.customer_tax_rule.apply(tax, pattern)
+                    if tax_ids:
+                        line.taxes.extend(Tax.browse(tax_ids))
+                    continue
+                line.taxes.append(tax)
+            if franchise.company_party and franchise.company_party.customer_tax_rule:
+                tax_ids = franchise.company_party.customer_tax_rule.apply(None, pattern)
+                if tax_ids:
+                    line.taxes.extend(Tax.browse(tax_ids))
+            # end copy
             lines.append(line)
         for uom_id, products in uom2products.iteritems():
             with Transaction().set_context(
