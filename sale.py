@@ -167,4 +167,7 @@ class Sale:
             changes['party.rec_name'] = party.rec_name
             self.party = party
             changes.update(self.on_change_party())
+            changes['shipment_address'] = self.franchise.address.id
+            changes['shipment_address.rec_name'] = (
+                self.franchise.address.rec_name)
         return changes
