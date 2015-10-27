@@ -1,7 +1,6 @@
 # The COPYRIGHT file at the top level of this repository contains
 # the full copyright notices and license terms.
 from collections import defaultdict
-from decimal import Decimal
 
 from trytond.model import ModelView, fields
 from trytond.pool import Pool, PoolMeta
@@ -91,14 +90,18 @@ class CreateSuggestions(Wizard):
             line.taxes = []
             pattern = line._get_tax_rule_pattern()
             for tax in line.product.customer_taxes_used:
-                if franchise.company_party and franchise.company_party.customer_tax_rule:
-                    tax_ids = franchise.company_party.customer_tax_rule.apply(tax, pattern)
+                if (franchise.company_party
+                        and franchise.company_party.customer_tax_rule):
+                    tax_ids = franchise.company_party.customer_tax_rule.apply(
+                        tax, pattern)
                     if tax_ids:
                         line.taxes.extend(Tax.browse(tax_ids))
                     continue
                 line.taxes.append(tax)
-            if franchise.company_party and franchise.company_party.customer_tax_rule:
-                tax_ids = franchise.company_party.customer_tax_rule.apply(None, pattern)
+            if (franchise.company_party
+                    and franchise.company_party.customer_tax_rule):
+                tax_ids = franchise.company_party.customer_tax_rule.apply(
+                    None, pattern)
                 if tax_ids:
                     line.taxes.extend(Tax.browse(tax_ids))
             # end copy
