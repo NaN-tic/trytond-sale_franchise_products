@@ -14,6 +14,7 @@ def register():
         Franchise,
         CreateSuggestionsStart,
         Sale,
+        Product,
         module='sale_franchise_products', type_='model')
     Pool.register(
         CreateSuggestions,

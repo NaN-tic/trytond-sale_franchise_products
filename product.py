@@ -4,9 +4,10 @@ from trytond.model import ModelView, ModelSQL, fields
 from trytond.pool import Pool, PoolMeta
 from trytond.pyson import Eval
 from trytond.wizard import Wizard, StateView, StateAction, Button
+from trytond.transaction import Transaction
 
 __all__ = ['SaleType', 'SaleTypeFranchise', 'TypeFranchiseTemplate',
-    'Template', 'Franchise']
+    'Template', 'Franchise', 'Product']
 __metaclass__ = PoolMeta
 
 
@@ -104,3 +105,29 @@ class Template:
     @classmethod
     def search_types(cls, name, clause):
         return [tuple(('type_franchises.type',)) + tuple(clause[1:])]
+
+
+class Product:
+    __name__ = 'product.product'
+
+    @classmethod
+    def get_sale_price_and_pvp(cls, products, quantity=0):
+        pool = Pool()
+        PriceList = pool.get('product.price_list')
+        Party = pool.get('party.party')
+        Uom = pool.get('product.uom')
+
+        prices = super(Product, cls).get_sale_price(products,
+            quantity=quantity)
+        if (Transaction().context.get('price_list')
+                and Transaction().context.get('customer')):
+            price_list = PriceList(Transaction().context['price_list'])
+            customer = Party(Transaction().context['customer'])
+            context_uom = None
+            if Transaction().context.get('uom'):
+                context_uom = Uom(Transaction().context['uom'])
+            for product in products:
+                uom = context_uom or product.default_uom
+                prices[product.id] = price_list.compute_all(customer, product,
+                    prices[product.id], quantity, uom)
+        return prices
