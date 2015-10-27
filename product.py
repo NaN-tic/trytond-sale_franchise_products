@@ -1,9 +1,10 @@
 # The COPYRIGHT file at the top level of this repository contains
 # the full copyright notices and license terms.
+from decimal import Decimal
+
 from trytond.model import ModelView, ModelSQL, fields
 from trytond.pool import Pool, PoolMeta
 from trytond.pyson import Eval
-from trytond.wizard import Wizard, StateView, StateAction, Button
 from trytond.transaction import Transaction
 
 __all__ = ['SaleType', 'SaleTypeFranchise', 'TypeFranchiseTemplate',
@@ -117,8 +118,7 @@ class Product:
         Party = pool.get('party.party')
         Uom = pool.get('product.uom')
 
-        prices = super(Product, cls).get_sale_price(products,
-            quantity=quantity)
+        prices = cls.get_unit_sale_price(products, quantity=quantity)
         if (Transaction().context.get('price_list')
                 and Transaction().context.get('customer')):
             price_list = PriceList(Transaction().context['price_list'])
@@ -130,4 +130,45 @@ class Product:
                 uom = context_uom or product.default_uom
                 prices[product.id] = price_list.compute_all(customer, product,
                     prices[product.id], quantity, uom)
+        return prices
+
+    @staticmethod
+    def get_unit_sale_price(products, quantity=0):
+        '''
+        Return the sale price for products and quantity.
+        It uses if exists from the context:
+            uom: the unit of measure
+            currency: the currency id for the returned price
+        '''
+        pool = Pool()
+        Uom = pool.get('product.uom')
+        User = pool.get('res.user')
+        Currency = pool.get('currency.currency')
+        Date = pool.get('ir.date')
+
+        today = Date.today()
+        prices = {}
+
+        uom = None
+        if Transaction().context.get('uom'):
+            uom = Uom(Transaction().context.get('uom'))
+
+        currency = None
+        if Transaction().context.get('currency'):
+            currency = Currency(Transaction().context.get('currency'))
+
+        user = User(Transaction().user)
+
+        for product in products:
+            prices[product.id] = product.list_price
+            if uom:
+                prices[product.id] = Uom.compute_price(
+                    product.default_uom, prices[product.id], uom)
+            if currency and user.company:
+                if user.company.currency != currency:
+                    date = Transaction().context.get('sale_date') or today
+                    with Transaction().set_context(date=date):
+                        prices[product.id] = Currency.compute(
+                            user.company.currency, prices[product.id],
+                            currency, round=False)
         return prices
