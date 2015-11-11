@@ -116,12 +116,14 @@ class CreateSuggestions(Wizard):
                     uom=uom_id,
                     price_list=(sale.price_list.id
                         if sale.price_list else None)):
-                product_prices = Product.get_sale_price_and_pvp(products, 0)
+                product_prices = Product.get_cost_sale_price_and_pvp(
+                    products, 0)
             for product_id, list_price in product_prices.iteritems():
                 for line in product2lines[product_id]:
-                    line.gross_unit_price = list_price[0]
-                    line.unit_price = list_price[0]
-                    line.public_price = list_price[1]
+                    line.cost_price = list_price[0]
+                    line.gross_unit_price = list_price[1]
+                    line.unit_price = list_price[1]
+                    line.public_price = list_price[2]
         sale.lines = lines
         return sale
 

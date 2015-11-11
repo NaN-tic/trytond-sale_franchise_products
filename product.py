@@ -112,7 +112,7 @@ class Product:
     __name__ = 'product.product'
 
     @classmethod
-    def get_sale_price_and_pvp(cls, products, quantity=0):
+    def get_cost_sale_price_and_pvp(cls, products, quantity=0):
         pool = Pool()
         PriceList = pool.get('product.price_list')
         Party = pool.get('party.party')
