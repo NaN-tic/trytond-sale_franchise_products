@@ -135,10 +135,10 @@ class CreateSuggestions(Wizard):
 
         franchises = defaultdict(list)
         for product in products:
-            for franchise in product.template.franchises:
-                if self.start.sale_type not in franchise.types:
+            for type_franchise in product.template.type_franchises:
+                if type_franchise.type != self.start.sale_type:
                     continue
-                franchises[franchise].append(product)
+                franchises[type_franchise.franchise].append(product)
 
         sales = [self.get_sale(f, p) for f, p in franchises.iteritems()]
         suggestions = Sale.create([s._save_values for s in sales])
