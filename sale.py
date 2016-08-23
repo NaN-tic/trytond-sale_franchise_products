@@ -26,11 +26,8 @@ class CreateSuggestionsStart(ModelView):
 
     @fields.depends('sale_type', 'notes')
     def on_change_sale_type(self):
-        changes = {}
         if self.sale_type and not self.notes:
-            changes['notes'] = self.sale_type.notes
-        return changes
-
+            self.notes = self.sale_type.notes
 
 class CreateSuggestions(Wizard):
     'Create Suggestions'
@@ -159,21 +156,13 @@ class Sale:
 
     @fields.depends('type', 'notes')
     def on_change_type(self):
-        changes = {}
         if self.type and not self.notes:
-            changes['comment'] = self.type.notes
-        return changes
+            self.comment = self.type.notes
 
     @fields.depends('franchise', methods=['party'])
     def on_change_franchise(self):
-        changes = super(Sale, self).on_change_franchise()
+        super(Sale, self).on_change_franchise()
         if self.franchise and self.franchise.company_party:
-            party = self.franchise.company_party
-            changes['party'] = party.id
-            changes['party.rec_name'] = party.rec_name
-            self.party = party
-            changes.update(self.on_change_party())
-            changes['shipment_address'] = self.franchise.address.id
-            changes['shipment_address.rec_name'] = (
-                self.franchise.address.rec_name)
-        return changes
+            self.party = self.franchise.company_party
+            self.on_change_party()
+            self.shipment_address = self.franchise.address
