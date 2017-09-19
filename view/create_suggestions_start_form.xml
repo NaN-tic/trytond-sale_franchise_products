@@ -8,4 +8,5 @@
     <field name="date"/>
     <separator name="notes" colspan="2"/>
     <field name="notes" colspan="2"/>
+    <field name="franchises" colspan="2" mode="tree,form"/>
 </form>
