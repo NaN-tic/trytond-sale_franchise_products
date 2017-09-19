@@ -17,6 +17,7 @@ class CreateSuggestionsStart(ModelView):
     sale_type = fields.Many2One('sale.type', 'Sale Type', required=True)
     date = fields.Date('Date', required=True)
     notes = fields.Text('Notes')
+    franchises = fields.One2Many('sale.franchise', None, 'Franchises')
 
     @staticmethod
     def default_date():
@@ -31,22 +32,40 @@ class CreateSuggestionsStart(ModelView):
             changes['notes'] = self.sale_type.notes
         return changes
 
+    @fields.depends('sale_type')
+    def on_change_with_franchises(self, name=None):
+        if not self.sale_type:
+            return []
+        pool = Pool()
+        Product = pool.get('product.product')
+        products = Product.search([
+            ('template.salable', '=', True),
+            ('template.types', '=', self.sale_type.id),
+        ])
+        return [
+            type_franchise.franchise.id
+            for product in products
+            for type_franchise in product.template.type_franchises
+            if type_franchise.type == self.sale_type
+        ]
+
 
 class CreateSuggestions(Wizard):
     'Create Suggestions'
     __name__ = 'sale.create_suggestions'
-    start = StateView('sale.create_suggestions.start',
+    start = StateView(
+        'sale.create_suggestions.start',
         'sale_franchise_products.create_suggestions_start_view_form', [
             Button('Cancel', 'end', 'tryton-cancel'),
             Button('Create', 'result', 'tryton-ok', default=True),
-            ])
+        ])
     result = StateAction('sale.act_sale_form')
 
     def _get_products_domain(self):
         return [
             ('template.salable', '=', True),
             ('template.types', '=', self.start.sale_type.id),
-            ]
+        ]
 
     def get_sale(self, franchise, products):
         pool = Pool()
@@ -90,16 +109,16 @@ class CreateSuggestions(Wizard):
             line.taxes = []
             pattern = line._get_tax_rule_pattern()
             for tax in line.product.customer_taxes_used:
-                if (franchise.company_party
-                        and franchise.company_party.customer_tax_rule):
+                if (franchise.company_party and
+                        franchise.company_party.customer_tax_rule):
                     tax_ids = franchise.company_party.customer_tax_rule.apply(
                         tax, pattern)
                     if tax_ids:
                         line.taxes.extend(Tax.browse(tax_ids))
                     continue
                 line.taxes.append(tax)
-            if (franchise.company_party
-                    and franchise.company_party.customer_tax_rule):
+            if (franchise.company_party and
+                    franchise.company_party.customer_tax_rule):
                 tax_ids = franchise.company_party.customer_tax_rule.apply(
                     None, pattern)
                 if tax_ids:
@@ -108,13 +127,15 @@ class CreateSuggestions(Wizard):
             lines.append(line)
         for uom_id, products in uom2products.iteritems():
             with Transaction().set_context(
-                    currency=(sale.currency.id
+                    currency=(
+                        sale.currency.id
                         if getattr(sale, 'currency', None)
                         else sale.default_currency()),
                     customer=sale.party.id,
                     sale_date=sale.sale_date,
                     uom=uom_id,
-                    price_list=(sale.price_list.id
+                    price_list=(
+                        sale.price_list.id
                         if sale.price_list else None)):
                 product_prices = Product.get_cost_sale_price_and_pvp(
                     products, 0)
@@ -127,19 +148,24 @@ class CreateSuggestions(Wizard):
         sale.lines = lines
         return sale
 
-    def do_result(self, action):
+    def get_franchises(self):
         pool = Pool()
-        Sale = pool.get('sale.sale')
         Product = pool.get('product.product')
         products = Product.search(self._get_products_domain())
-
         franchises = defaultdict(list)
         for product in products:
             for type_franchise in product.template.type_franchises:
-                if type_franchise.type != self.start.sale_type:
+                if type_franchise.type != self.start.sale_type or \
+                        type_franchise.franchise not in \
+                        self.start.franchises:
                     continue
                 franchises[type_franchise.franchise].append(product)
+        return franchises
 
+    def do_result(self, action):
+        pool = Pool()
+        Sale = pool.get('sale.sale')
+        franchises = self.get_franchises()
         sales = [self.get_sale(f, p) for f, p in franchises.iteritems()]
         suggestions = Sale.create([s._save_values for s in sales])
         data = {'res_id': [s.id for s in suggestions]}
@@ -151,10 +177,9 @@ class CreateSuggestions(Wizard):
 class Sale:
     __name__ = 'sale.sale'
     __metaclass__ = PoolMeta
-    type = fields.Many2One('sale.type', 'Type',
-        states={
-            'readonly': Eval('state') != 'draft',
-            },
+    type = fields.Many2One(
+        'sale.type', 'Type',
+        states={'readonly': Eval('state') != 'draft'},
         depends=['state'])
 
     @fields.depends('type', 'notes')
