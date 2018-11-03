@@ -84,8 +84,7 @@ class CreateSuggestions(Wizard):
                 if not hasattr(sale, field):
                     setattr(sale, field, None)
             method = 'on_change_%s' % name
-            for k, v in getattr(sale, method)().iteritems():
-                setattr(sale, k, v)
+            getattr(sale, method)()
 
         lines = []
         uom2products = {}
@@ -101,10 +100,10 @@ class CreateSuggestions(Wizard):
             line.unit = product.sale_uom.id
             uom2products.setdefault(line.unit.id, []).append(product)
             product2lines.setdefault(product.id, []).append(line)
-            for k, v in line.on_change_product().iteritems():
-                setattr(line, k, v)
+            line.on_change_product()
             # TODO: copy from sale.line.on_change_product()
             line.taxes = []
+            taxes = []
             pattern = line._get_tax_rule_pattern()
             for tax in line.product.customer_taxes_used:
                 if (franchise.company_party and
@@ -112,16 +111,17 @@ class CreateSuggestions(Wizard):
                     tax_ids = franchise.company_party.customer_tax_rule.apply(
                         tax, pattern)
                     if tax_ids:
-                        line.taxes.extend(Tax.browse(tax_ids))
+                        taxes.extend(Tax.browse(tax_ids))
                     continue
-                line.taxes.append(tax)
+                taxes.append(tax)
             if (franchise.company_party and
                     franchise.company_party.customer_tax_rule):
                 tax_ids = franchise.company_party.customer_tax_rule.apply(
                     None, pattern)
                 if tax_ids:
-                    line.taxes.extend(Tax.browse(tax_ids))
+                    taxes.extend(Tax.browse(tax_ids))
             # end copy
+            line.taxes = taxes
             lines.append(line)
         for uom_id, products in uom2products.iteritems():
             with Transaction().set_context(
