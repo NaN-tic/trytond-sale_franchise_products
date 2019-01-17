@@ -173,9 +173,9 @@ class CreateSuggestions(Wizard):
         return action, data
 
 
-class Sale:
+class Sale(metaclass=PoolMeta):
     __name__ = 'sale.sale'
-    __metaclass__ = PoolMeta
+
     type = fields.Many2One('sale.type', 'Type',
         states={
         'readonly': Eval('state') != 'draft',
@@ -187,7 +187,7 @@ class Sale:
         if self.type and not self.notes:
             self.comment = self.type.notes
 
-    @fields.depends('franchise', methods=['party'])
+    @fields.depends('franchise', methods=['on_change_party'])
     def on_change_franchise(self):
         super(Sale, self).on_change_franchise()
         if self.franchise and self.franchise.company_party:

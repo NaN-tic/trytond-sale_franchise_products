@@ -7,8 +7,6 @@ from trytond.transaction import Transaction
 
 __all__ = ['SaleType', 'SaleTypeFranchise', 'TypeFranchiseTemplate',
     'Template', 'Franchise', 'Product']
-__metaclass__ = PoolMeta
-
 
 class SaleType(ModelSQL, ModelView):
     'Sale Type'
@@ -22,7 +20,7 @@ class SaleType(ModelSQL, ModelView):
         'franchise', 'Franchises')
 
 
-class Franchise:
+class Franchise(metaclass=PoolMeta):
     __name__ = 'sale.franchise'
     templates = fields.Function(fields.Many2Many('product.template', None,
             None, 'Product Templates'),
@@ -72,7 +70,7 @@ class TypeFranchiseTemplate(ModelSQL, ModelView):
         select=True, ondelete='CASCADE')
 
 
-class Template:
+class Template(metaclass=PoolMeta):
     __name__ = 'product.template'
     type_franchises = fields.Many2Many(
         'sale.type-sale.franchise-product.template', 'template',
@@ -107,7 +105,7 @@ class Template:
         return [tuple(('type_franchises.type',)) + tuple(clause[1:])]
 
 
-class Product:
+class Product(metaclass=PoolMeta):
     __name__ = 'product.product'
 
     @classmethod
