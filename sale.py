@@ -123,7 +123,7 @@ class CreateSuggestions(Wizard):
             # end copy
             line.taxes = taxes
             lines.append(line)
-        for uom_id, products in uom2products.iteritems():
+        for uom_id, products in uom2products.items():
             with Transaction().set_context(
                     currency=(
                         sale.currency.id
@@ -137,7 +137,7 @@ class CreateSuggestions(Wizard):
                         if sale.price_list else None)):
                 product_prices = Product.get_cost_sale_price_and_pvp(
                     products, 0)
-            for product_id, list_price in product_prices.iteritems():
+            for product_id, list_price in product_prices.items():
                 for line in product2lines[product_id]:
                     line.cost_price = list_price[0]
                     line.gross_unit_price = list_price[1]
@@ -165,7 +165,7 @@ class CreateSuggestions(Wizard):
         Sale = pool.get('sale.sale')
 
         franchises = self.get_franchises()
-        sales = [self.get_sale(f, p) for f, p in franchises.iteritems()]
+        sales = [self.get_sale(f, p) for f, p in franchises.items()]
         suggestions = Sale.create([s._save_values for s in sales])
         data = {'res_id': [s.id for s in suggestions]}
         if len(suggestions) == 1:
