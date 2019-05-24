@@ -24,7 +24,7 @@ msgstr "Fecha"
 
 msgctxt "field:sale.create_suggestions.start,id:"
 msgid "ID"
-msgstr "Identificador"
+msgstr "ID"
 
 msgctxt "field:sale.create_suggestions.start,notes:"
 msgid "Notes"
@@ -64,7 +64,7 @@ msgstr "Franquicias"
 
 msgctxt "field:sale.type,id:"
 msgid "ID"
-msgstr "Identificador"
+msgstr "ID"
 
 msgctxt "field:sale.type,name:"
 msgid "Name"
@@ -80,11 +80,11 @@ msgstr "Nombre"
 
 msgctxt "field:sale.type,write_date:"
 msgid "Write Date"
-msgstr "Fecha modificación"
+msgstr "Fecha de modificación"
 
 msgctxt "field:sale.type,write_uid:"
 msgid "Write User"
-msgstr "Usuario modificación"
+msgstr "Usuario de modificación"
 
 msgctxt "field:sale.type-sale.franchise,create_date:"
 msgid "Create Date"
@@ -100,7 +100,7 @@ msgstr "Franquicia"
 
 msgctxt "field:sale.type-sale.franchise,id:"
 msgid "ID"
-msgstr "Identificador"
+msgstr "ID"
 
 msgctxt "field:sale.type-sale.franchise,rec_name:"
 msgid "Name"
@@ -116,11 +116,11 @@ msgstr "Tipo"
 
 msgctxt "field:sale.type-sale.franchise,write_date:"
 msgid "Write Date"
-msgstr "Fecha modificación"
+msgstr "Fecha de modificación"
 
 msgctxt "field:sale.type-sale.franchise,write_uid:"
 msgid "Write User"
-msgstr "Usuario modificación"
+msgstr "Usuario de modificación"
 
 msgctxt "field:sale.type-sale.franchise-product.template,create_date:"
 msgid "Create Date"
@@ -132,7 +132,7 @@ msgstr "Usuario de creación"
 
 msgctxt "field:sale.type-sale.franchise-product.template,id:"
 msgid "ID"
-msgstr "Identificador"
+msgstr "ID"
 
 msgctxt "field:sale.type-sale.franchise-product.template,rec_name:"
 msgid "Name"
@@ -148,11 +148,11 @@ msgstr "Tipo por franquicia"
 
 msgctxt "field:sale.type-sale.franchise-product.template,write_date:"
 msgid "Write Date"
-msgstr "Fecha modificación"
+msgstr "Fecha de modificación"
 
 msgctxt "field:sale.type-sale.franchise-product.template,write_uid:"
 msgid "Write User"
-msgstr "Usuario modificación"
+msgstr "Usuario de modificación"
 
 msgctxt "help:sale.type,accepts_new_products:"
 msgid "If left blank it will not be possible to create new lines on sales"
