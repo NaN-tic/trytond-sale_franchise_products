@@ -28,6 +28,7 @@
             <field name="view" ref="sale_type_view_form"/>
             <field name="act_window" ref="act_sale_type"/>
         </record>
+
         <record model="ir.model.access" id="access_sale_type">
             <field name="model" search="[('model', '=', 'sale.type')]"/>
             <field name="perm_read" eval="True"/>
@@ -43,6 +44,7 @@
             <field name="perm_create" eval="True"/>
             <field name="perm_delete" eval="True"/>
         </record>
+
         <record model="ir.ui.view" id="sale_type_franchise_view_form">
             <field name="model">sale.type-sale.franchise</field>
             <field name="type">form</field>
@@ -69,6 +71,7 @@
             <field name="view" ref="sale_type_franchise_view_form"/>
             <field name="act_window" ref="act_sale_type_franchise"/>
         </record>
+
         <record model="ir.model.access" id="access_sale_type_franchise">
             <field name="model"
                 search="[('model', '=', 'sale.type-sale.franchise')]"/>
@@ -86,30 +89,28 @@
             <field name="perm_create" eval="True"/>
             <field name="perm_delete" eval="True"/>
         </record>
+
         <record model="ir.ui.view" id="product_template_view_tree">
             <field name="model">product.template</field>
-            <field name="type" eval="None"/>
             <field name="inherit" ref="product.template_view_tree"/>
             <field name="name">template_list</field>
         </record>
         <record model="ir.ui.view" id="product_template_view_form">
             <field name="model">product.template</field>
-            <field name="type" eval="None"/>
             <field name="inherit" ref="product.template_view_form"/>
             <field name="name">template_form</field>
         </record>
         <record model="ir.ui.view" id="franchise_view_list">
             <field name="model">sale.franchise</field>
-            <field name="type" eval="None"/>
             <field name="inherit" ref="sale_franchise.franchise_view_list"/>
             <field name="name">franchise_list</field>
         </record>
         <record model="ir.ui.view" id="franchise_view_form">
             <field name="model">sale.franchise</field>
-            <field name="type" eval="None"/>
             <field name="inherit" ref="sale_franchise.franchise_view_form"/>
             <field name="name">franchise_form</field>
         </record>
+
         <menuitem action="act_sale_type" id="menu_sale_type" parent="sale.menu_configuration" sequence="20"/>
         <menuitem action="act_sale_type_franchise"
             id="menu_sale_type_franchise" parent="product.menu_main_product"
