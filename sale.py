@@ -77,7 +77,8 @@ class CreateSuggestions(Wizard):
                 'sale_franchise_products.msg_missing_franchise_company',
                 franchise=franchise.rec_name))
 
-        sale = Sale()
+        values = Sale.default_get(Sale._fields.keys(), with_rec_name=False)
+        sale = Sale(**values)
         sale.party = franchise.company_party
         sale.franchise = franchise
         sale.type = self.start.sale_type
