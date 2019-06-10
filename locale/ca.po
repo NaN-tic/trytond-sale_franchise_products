@@ -175,6 +175,10 @@ msgctxt "model:ir.action,name:wizard_create_suggestions"
 msgid "Create Sugestions"
 msgstr "Crear sugeriments"
 
+msgctxt "model:ir.message,text:msg_missing_franchise_company"
+msgid "Missing company party in "%(franchise)s"."
+msgstr "Falta el tercer a "%(franchise)s"."
+
 msgctxt "model:ir.ui.menu,name:"
 msgid "Create Missing Franchises"
 msgstr "Crear les franquicies faltants"

@@ -1,12 +1,13 @@
 # The COPYRIGHT file at the top level of this repository contains
 # the full copyright notices and license terms.
 from collections import defaultdict
-
 from trytond.model import ModelView, fields
 from trytond.pool import Pool, PoolMeta
 from trytond.pyson import Eval
 from trytond.transaction import Transaction
 from trytond.wizard import Wizard, StateView, StateAction, Button
+from trytond.i18n import gettext
+from trytond.exceptions import UserError
 
 __all__ = ['CreateSuggestionsStart', 'CreateSuggestions', 'Sale']
 
@@ -70,7 +71,11 @@ class CreateSuggestions(Wizard):
         Product = pool.get('product.product')
         Sale = pool.get('sale.sale')
         SaleLine = pool.get('sale.line')
-        Tax = pool.get('account.tax')
+
+        if not franchise.company_party:
+            raise UserError(gettext(
+                'sale_franchise_products.msg_missing_franchise_company',
+                franchise=franchise.rec_name))
 
         sale = Sale()
         sale.party = franchise.company_party
@@ -91,6 +96,7 @@ class CreateSuggestions(Wizard):
         product2lines = {}
         for product in products:
             line = SaleLine()
+            line.sale = sale
             for field in SaleLine.product.on_change:
                 if not hasattr(sale, field):
                     setattr(sale, field, None)
@@ -101,27 +107,6 @@ class CreateSuggestions(Wizard):
             uom2products.setdefault(line.unit.id, []).append(product)
             product2lines.setdefault(product.id, []).append(line)
             line.on_change_product()
-            # TODO: copy from sale.line.on_change_product()
-            line.taxes = []
-            taxes = []
-            pattern = line._get_tax_rule_pattern()
-            for tax in line.product.customer_taxes_used:
-                if (franchise.company_party and
-                        franchise.company_party.customer_tax_rule):
-                    tax_ids = franchise.company_party.customer_tax_rule.apply(
-                        tax, pattern)
-                    if tax_ids:
-                        taxes.extend(Tax.browse(tax_ids))
-                    continue
-                taxes.append(tax)
-            if (franchise.company_party and
-                    franchise.company_party.customer_tax_rule):
-                tax_ids = franchise.company_party.customer_tax_rule.apply(
-                    None, pattern)
-                if tax_ids:
-                    taxes.extend(Tax.browse(tax_ids))
-            # end copy
-            line.taxes = taxes
             lines.append(line)
         for uom_id, products in uom2products.items():
             with Transaction().set_context(

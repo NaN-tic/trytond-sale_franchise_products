@@ -8,6 +8,7 @@ from trytond.transaction import Transaction
 __all__ = ['SaleType', 'SaleTypeFranchise', 'TypeFranchiseTemplate',
     'Template', 'Franchise', 'Product']
 
+
 class SaleType(ModelSQL, ModelView):
     'Sale Type'
     __name__ = 'sale.type'
