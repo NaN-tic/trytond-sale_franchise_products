@@ -8,6 +8,8 @@ from trytond.transaction import Transaction
 from trytond.wizard import Wizard, StateView, StateAction, Button
 from trytond.i18n import gettext
 from trytond.exceptions import UserError
+import logging
+
 
 __all__ = ['CreateSuggestionsStart', 'CreateSuggestions', 'Sale']
 
@@ -52,6 +54,8 @@ class CreateSuggestionsStart(ModelView):
 class CreateSuggestions(Wizard):
     'Create Suggestions'
     __name__ = 'sale.create_suggestions'
+    _logger = logging.getLogger(__name__)
+
     start = StateView(
         'sale.create_suggestions.start',
         'sale_franchise_products.create_suggestions_start_view_form', [
@@ -124,6 +128,7 @@ class CreateSuggestions(Wizard):
                 product_prices = Product.get_cost_sale_price_and_pvp(
                     products, 0)
             for product_id, list_price in product_prices.items():
+
                 for line in product2lines[product_id]:
                     line.cost_price = list_price[0]
                     line.gross_unit_price = list_price[1]
@@ -150,9 +155,13 @@ class CreateSuggestions(Wizard):
         pool = Pool()
         Sale = pool.get('sale.sale')
 
+        self._logger.info("Get franchises")
         franchises = self.get_franchises()
+        self._logger.info("Get sales...")
         sales = [self.get_sale(f, p) for f, p in franchises.items()]
+        self._logger.info("Saving sales...")
         suggestions = Sale.create([s._save_values for s in sales])
+        self._logger.info("Sales Created")
         data = {'res_id': [s.id for s in suggestions]}
         if len(suggestions) == 1:
             action['views'].reverse()
