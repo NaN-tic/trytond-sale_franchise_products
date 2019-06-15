@@ -175,8 +175,8 @@ msgid "Create Sugestions"
 msgstr "Crear sugerimientos"
 
 msgctxt "model:ir.message,text:msg_missing_franchise_company"
-msgid "Missing company party in "%(franchise)s"."
-msgstr "Fala el tercero en "%(franchise)s"."
+msgid "Missing company party in \"%(franchise)s\"."
+msgstr "Fala el tercero en \"%(franchise)s\"."
 
 msgctxt "model:ir.ui.menu,name:"
 msgid "Create Missing Franchises"
